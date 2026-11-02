@@ -16,9 +16,13 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix('api/v1');
   app.use(helmet());
   app.enableCors({
-    origin: process.env['FRONTEND_ORIGIN'] ?? 'http://localhost:4200',
+    origin: [
+      process.env['FRONTEND_ORIGIN'] ?? 'https://gester-academico.vercel.app',
+      'http://localhost:4200'
+    ],
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   });
   app.useGlobalPipes(
     new ValidationPipe({
