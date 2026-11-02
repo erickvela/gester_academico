@@ -1,0 +1,12 @@
+node_modules/
+**/node_modules/
+**/.env
+**/.env.*
+!**/.env.example
+backend/dist/
+backend/coverage/
+backend/*.tsbuildinfo
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+*.log

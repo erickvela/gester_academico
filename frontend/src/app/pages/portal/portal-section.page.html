@@ -1,0 +1,157 @@
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">AULABASE <span>/</span> GESTIÓN ACADÉMICA</p>
+    <h1>{{ sectionTitle() }}</h1>
+    <p class="page-subtitle">Información clara para acompañar cada etapa del ciclo.</p>
+  </div>
+  <span class="page-spark">✳</span>
+</div>
+
+@if (errorMessage()) {
+  <div class="feedback feedback-error" role="alert"><span>!</span>{{ errorMessage() }}</div>
+}
+@if (notice()) {
+  <div class="feedback feedback-success" role="status"><span>✓</span>{{ notice() }}</div>
+}
+@if (loading()) {
+  <div class="loading-state"><span class="loader"></span> Consultando información…</div>
+}
+
+@if (section() === 'overview') {
+  <div class="welcome-card">
+    <div><span class="welcome-kicker">UN ESPACIO PARA AVANZAR</span><h2>Hola, {{ auth.user()?.firstName }}.</h2><p>Tu panorama académico, de un vistazo.</p></div>
+    <div class="welcome-mark">a<span>.</span></div>
+    <div class="welcome-decoration"></div>
+  </div>
+  @if (overview(); as data) {
+    <div class="stats-grid">
+      <article class="stat-tile"><span class="tile-icon tile-blue">▤</span><span class="tile-label">CURSOS ACTIVOS</span><strong>{{ data.activeCourses }}</strong><small>Asignaturas en seguimiento</small></article>
+      <article class="stat-tile"><span class="tile-icon tile-green">✳</span><span class="tile-label">ALUMNOS</span><strong>{{ data.activeStudents }}</strong><small>Registros académicos</small></article>
+      <article class="stat-tile"><span class="tile-icon tile-orange">⌁</span><span class="tile-label">INSCRIPCIONES</span><strong>{{ data.enrollments }}</strong><small>Relaciones curso-alumno</small></article>
+      <article class="stat-tile"><span class="tile-icon tile-violet">◷</span><span class="tile-label">PUNTEOS REGISTRADOS</span><strong>{{ data.gradeRecords }}</strong><small>Evaluaciones capturadas</small></article>
+    </div>
+    <div class="overview-grid">
+      <article class="panel average-panel"><div class="panel-heading"><div><span class="panel-kicker">PANORAMA DE EVALUACIÓN</span><h3>Promedio de punteos</h3></div><span class="panel-badge">GLOBAL</span></div>
+        <div class="average-value">{{ data.averageScore === null ? '—' : (data.averageScore | number:'1.0-2') }}<small>{{ data.averageScore === null ? 'Sin registros todavía' : 'puntos en promedio' }}</small></div>
+        <div class="average-note"><span>↗</span> El promedio considera los punteos ingresados; revisa el detalle por curso en reportes.</div>
+      </article>
+      <article class="panel next-panel"><span class="panel-kicker">ACCESOS RÁPIDOS</span><h3>¿Qué quieres hacer?</h3>
+        <a href="/app/courses"><span class="quick-icon quick-blue">▤</span><span><b>Organizar cursos</b><small>Docentes, créditos y estado</small></span><i>↗</i></a>
+        <a href="/app/students"><span class="quick-icon quick-green">✳</span><span><b>Registrar alumnos</b><small>Directorio y estado académico</small></span><i>↗</i></a>
+        <a href="/app/grades"><span class="quick-icon quick-orange">⌁</span><span><b>Inscripciones y punteos</b><small>Seguimiento por asignatura</small></span><i>↗</i></a>
+      </article>
+    </div>
+  }
+}
+
+@if (section() === 'courses') {
+  <div class="section-layout">
+    <article class="panel form-panel">
+      <div class="panel-heading"><div><span class="panel-kicker">CATÁLOGO ACADÉMICO</span><h3>Registrar un curso</h3></div><span class="form-step">01</span></div>
+      <form [formGroup]="courseForm" (ngSubmit)="createCourse()">
+        <div class="form-row"><label>Código<input formControlName="code" placeholder="MAT-101"></label><label>Créditos<input formControlName="credits" type="number" min="1" max="20"></label></div>
+        <label>Nombre del curso<input formControlName="name" placeholder="Matemática aplicada"></label>
+        <label>Descripción <span class="optional">opcional</span><textarea formControlName="description" rows="3" placeholder="Breve descripción del curso"></textarea></label>
+        @if (auth.user()?.role === 'ADMIN') {
+          <label>Docente responsable
+            <select formControlName="teacherId"><option value="">Selecciona un docente</option>@for (teacher of teachers(); track teacher.id) { <option [value]="teacher.id">{{ teacher.firstName }} {{ teacher.lastName }}</option> }</select>
+          </label>
+        }
+        <button class="primary-button" type="submit" [disabled]="saving()">{{ saving() ? 'Guardando…' : 'Guardar curso' }} <span>↗</span></button>
+      </form>
+    </article>
+    <article class="panel table-panel">
+      <div class="panel-heading"><div><span class="panel-kicker">CURSOS REGISTRADOS</span><h3>Catálogo de cursos <span class="count-pill">{{ courses().length }}</span></h3></div><span class="table-mark">▤</span></div>
+      @if (courses().length) {
+        <div class="table-wrap"><table><thead><tr><th>CURSO</th><th>CRÉDITOS</th><th>ESTADO</th><th></th></tr></thead><tbody>
+          @for (course of courses(); track course.id) {
+            <tr><td><b class="row-title">{{ course.name }}</b><small class="row-subtitle">{{ course.code }}</small></td><td>{{ course.credits }}</td><td><span class="status" [class.status-off]="!course.isActive">{{ course.isActive ? 'Activo' : 'Inactivo' }}</span></td><td><button class="text-button" type="button" (click)="toggleCourse(course)">{{ course.isActive ? 'Desactivar' : 'Activar' }}</button></td></tr>
+          }
+        </tbody></table></div>
+      } @else if (!loading()) { <div class="empty-state"><span>▤</span><b>Aún no hay cursos registrados.</b><small>Completa el formulario para crear el primero.</small></div> }
+    </article>
+  </div>
+}
+
+@if (section() === 'students') {
+  <div class="section-layout">
+    <article class="panel form-panel">
+      <div class="panel-heading"><div><span class="panel-kicker">DIRECTORIO ACADÉMICO</span><h3>Registrar un alumno</h3></div><span class="form-step">01</span></div>
+      <form [formGroup]="studentForm" (ngSubmit)="createStudent()">
+        <label>Carné estudiantil<input formControlName="code" placeholder="2026-001"></label>
+        <div class="form-row"><label>Nombres<input formControlName="firstName" placeholder="Nombre"></label><label>Apellidos<input formControlName="lastName" placeholder="Apellidos"></label></div>
+        <label>Correo electrónico<input formControlName="email" type="email" placeholder="alumno@institucion.edu"></label>
+        <button class="primary-button" type="submit" [disabled]="saving()">{{ saving() ? 'Guardando…' : 'Registrar alumno' }} <span>↗</span></button>
+      </form>
+    </article>
+    <article class="panel table-panel">
+      <div class="panel-heading"><div><span class="panel-kicker">COMUNIDAD ESTUDIANTIL</span><h3>Directorio de alumnos <span class="count-pill">{{ students().length }}</span></h3></div><span class="table-mark">✳</span></div>
+      @if (students().length) {
+        <div class="table-wrap"><table><thead><tr><th>ALUMNO</th><th>CARNÉ</th><th>ESTADO</th><th></th></tr></thead><tbody>
+          @for (student of students(); track student.id) {
+            <tr><td><b class="row-title">{{ student.firstName }} {{ student.lastName }}</b><small class="row-subtitle">{{ student.email }}</small></td><td>{{ student.code }}</td><td><span class="status" [class.status-off]="student.status !== 'ACTIVE'">{{ student.status === 'ACTIVE' ? 'Activo' : student.status === 'GRADUATED' ? 'Graduado' : 'Inactivo' }}</span></td><td>@if (student.status !== 'GRADUATED') { <button class="text-button" type="button" (click)="toggleStudent(student)">{{ student.status === 'ACTIVE' ? 'Desactivar' : 'Activar' }}</button> }</td></tr>
+          }
+        </tbody></table></div>
+      } @else if (!loading()) { <div class="empty-state"><span>✳</span><b>Aún no hay alumnos registrados.</b><small>Completa el formulario para agregar un alumno.</small></div> }
+    </article>
+  </div>
+}
+
+@if (section() === 'grades') {
+  <article class="panel course-picker">
+    <div><span class="panel-kicker">TRABAJO POR ASIGNATURA</span><h3>Selecciona un curso</h3></div>
+    <select [value]="selectedCourseId()" (change)="onCourseSelection($event)"><option value="">Elige un curso para continuar</option>@for (course of courses(); track course.id) { <option [value]="course.id">{{ course.code }} · {{ course.name }}</option> }</select>
+  </article>
+  @if (selectedCourseId()) {
+    <div class="grade-forms">
+      <article class="panel form-panel">
+        <div class="panel-heading"><div><span class="panel-kicker">GESTIÓN DE MATRÍCULA</span><h3>Inscribir alumno</h3></div><span class="form-step">01</span></div>
+        <form [formGroup]="enrollmentForm" (ngSubmit)="createEnrollment()">
+          <label>Alumno<select formControlName="studentId"><option value="">Selecciona un alumno</option>@for (student of students(); track student.id) { @if (student.status === 'ACTIVE') { <option [value]="student.id">{{ student.code }} · {{ student.firstName }} {{ student.lastName }}</option> } }</select></label>
+          <button class="secondary-button" type="submit" [disabled]="saving()">Inscribir en este curso <span>↗</span></button>
+        </form>
+        <div class="inline-list"><span class="inline-list-title">INSCRIPCIONES · {{ enrollments().length }}</span>@for (enrollment of enrollments(); track enrollment.id) { <div><span class="mini-avatar">{{ studentName(enrollment.studentId).charAt(0) }}</span>{{ studentName(enrollment.studentId) }}</div> } @if (!enrollments().length && !loading()) { <small>Aún no hay alumnos inscritos.</small> }</div>
+      </article>
+      <article class="panel form-panel">
+        <div class="panel-heading"><div><span class="panel-kicker">SEGUIMIENTO DE EVALUACIÓN</span><h3>Registrar punteo</h3></div><span class="form-step">02</span></div>
+        <form [formGroup]="gradeForm" (ngSubmit)="createGrade()">
+          <label>Alumno inscrito<select formControlName="studentId"><option value="">Selecciona un alumno</option>@for (enrollment of enrollments(); track enrollment.id) { <option [value]="enrollment.studentId">{{ studentName(enrollment.studentId) }}</option> }</select></label>
+          <label>Nombre de la evaluación<input formControlName="title" placeholder="Parcial 1"></label>
+          <div class="form-row three-cols"><label>Punteo<input type="number" min="0" formControlName="score"></label><label>Máximo<input type="number" min="1" formControlName="maxScore"></label><label>Ponderación %<input type="number" min="0" max="100" formControlName="percentage"></label></div>
+          <button class="primary-button" type="submit" [disabled]="saving()">Guardar punteo <span>↗</span></button>
+        </form>
+      </article>
+    </div>
+    <article class="panel table-panel records-panel"><div class="panel-heading"><div><span class="panel-kicker">HISTORIAL DEL CURSO</span><h3>Evaluaciones registradas <span class="count-pill">{{ grades().length }}</span></h3></div></div>
+      @if (grades().length) { <div class="table-wrap"><table><thead><tr><th>ALUMNO</th><th>EVALUACIÓN</th><th>PUNTEO</th><th>PONDERACIÓN</th><th>FECHA</th></tr></thead><tbody>@for (grade of grades(); track grade.id) { <tr><td>{{ studentName(grade.studentId) }}</td><td><b class="row-title">{{ grade.title }}</b></td><td><strong>{{ grade.score }}</strong><span class="muted"> / {{ grade.maxScore }}</span></td><td>{{ grade.percentage }}%</td><td>{{ grade.createdAt | date:'mediumDate' }}</td></tr> }</tbody></table></div> } @else if (!loading()) { <div class="empty-state"><span>⌁</span><b>Sin evaluaciones por ahora.</b><small>Inscribe a un alumno y registra su primer punteo.</small></div> }
+    </article>
+  }
+}
+
+@if (section() === 'reports') {
+  <article class="report-intro"><div><span class="panel-kicker">LECTURA DEL CICLO</span><h2>Datos que ayudan a ver el avance.</h2><p>Consulta el promedio de punteos y el volumen de evaluaciones por curso.</p></div><button class="secondary-button" type="button" (click)="downloadReport()" [disabled]="!courseReports().length">Descargar CSV <span>↓</span></button></article>
+  <article class="panel table-panel report-table"><div class="panel-heading"><div><span class="panel-kicker">RENDIMIENTO REGISTRADO</span><h3>Resumen por curso</h3></div><span class="table-mark">◷</span></div>
+    @if (courseReports().length) { <div class="table-wrap"><table><thead><tr><th>CURSO</th><th>ESTADO</th><th>PROMEDIO DE PUNTEOS</th><th>EVALUACIONES</th></tr></thead><tbody>@for (report of courseReports(); track report.id) { <tr><td><b class="row-title">{{ report.name }}</b><small class="row-subtitle">{{ report.code }}</small></td><td><span class="status" [class.status-off]="!report.isActive">{{ report.isActive ? 'Activo' : 'Inactivo' }}</span></td><td>{{ report.averageScore === null ? '—' : (report.averageScore | number:'1.0-2') }}</td><td>{{ report.gradeCount }}</td></tr> }</tbody></table></div> } @else if (!loading()) { <div class="empty-state"><span>◷</span><b>El reporte aparecerá cuando existan cursos.</b><small>Registra cursos y evaluaciones para consultar resultados.</small></div> }
+  </article>
+  <p class="report-footnote">El promedio muestra el puntaje obtenido en las evaluaciones registradas. La ponderación se almacena por evaluación para apoyar el análisis académico.</p>
+}
+
+@if (section() === 'access') {
+  <div class="section-layout">
+    <article class="panel form-panel">
+      <div class="panel-heading"><div><span class="panel-kicker">CONTROL DE ACCESO</span><h3>Crear cuenta</h3></div><span class="form-step">01</span></div>
+      <form [formGroup]="accessForm" (ngSubmit)="createAccessUser()">
+        <div class="form-row"><label>Nombres<input formControlName="firstName" placeholder="Nombre"></label><label>Apellidos<input formControlName="lastName" placeholder="Apellidos"></label></div>
+        <label>Correo electrónico<input formControlName="email" type="email" placeholder="docente@institucion.edu"></label>
+        <!--<label>Contraseña temporal<input formControlName="password" type="password" autocomplete="new-password" placeholder="Mínimo 12 caracteres"></label>-->
+        <label>Rol<select formControlName="role"><option value="TEACHER">Docente</option><option value="ADMIN">Administración</option></select></label>
+        <button class="primary-button" type="submit" [disabled]="saving()">{{ saving() ? 'Creando…' : 'Crear cuenta' }} <span>↗</span></button>
+        <p class="form-hint">Entrega las credenciales temporales de manera segura.</p>
+      </form>
+    </article>
+    <article class="panel table-panel">
+      <div class="panel-heading"><div><span class="panel-kicker">CUENTAS DEL SISTEMA</span><h3>Personas con acceso <span class="count-pill">{{ users().length }}</span></h3></div><span class="table-mark">⌘</span></div>
+      @if (users().length) { <div class="table-wrap"><table><thead><tr><th>PERSONA</th><th>ROL</th><th>ESTADO</th><th></th></tr></thead><tbody>@for (user of users(); track user.id) { <tr><td><b class="row-title">{{ user.firstName }} {{ user.lastName }}</b><small class="row-subtitle">{{ user.email }}</small></td><td>{{ user.role === 'ADMIN' ? 'Administración' : 'Docente' }}</td><td><span class="status" [class.status-off]="!user.isActive">{{ user.isActive ? 'Activo' : 'Inactivo' }}</span></td><td><button class="text-button" type="button" [disabled]="user.id === auth.user()?.id" (click)="toggleUser(user)">{{ user.isActive ? 'Desactivar' : 'Activar' }}</button></td></tr> }</tbody></table></div> } @else if (!loading()) { <div class="empty-state"><span>⌘</span><b>No hay cuentas registradas.</b><small>Crea una cuenta docente para comenzar.</small></div> }
+    </article>
+  </div>
+}
