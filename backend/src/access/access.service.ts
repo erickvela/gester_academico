@@ -23,6 +23,15 @@ export class AccessService {
       .all();
   }
 
+  private generateRandomPassword(length = 12): string {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+    let rawPassword = '';
+    for (let i = 0; i < length; i++) {
+      rawPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return rawPassword;
+  }
+
   async create(input: CreateUserDto, actorId: string, ip?: string) {
     const email = input.email.trim().toLowerCase();
     const existing = await this.prisma.db.orm.public.User.where({ email }).first();
@@ -30,7 +39,10 @@ export class AccessService {
       throw new ConflictException('Ya existe una cuenta con ese correo.');
     }
 
-    const password = await hash(input.password, 12);
+    // Si el frontend no envía password, generamos una aleatoria válida de 12 caracteres
+    const rawPassword = input.password || this.generateRandomPassword(12);
+
+    const password = await hash(rawPassword, 12);
     const user = await this.prisma.db.orm.public.User.create({
       email,
       firstName: input.firstName.trim(),
@@ -48,6 +60,8 @@ export class AccessService {
       role: user.role,
       isActive: user.isActive,
       createdAt: user.createdAt,
+      // Retornamos la clave generada si el backend la asignó automáticamente
+      temporaryPassword: input.password ? undefined : rawPassword,
     };
   }
 
