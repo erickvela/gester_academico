@@ -53,16 +53,14 @@ export class AccessService {
     });
     await this.audit.record(actorId, 'access.user.created', ip);
 
-    // Disparar el envío de correo automático con la contraseña temporal
-    try {
-      await this.mailService.sendTeacherCredentials(
-        user.email,
-        rawPassword
-      );
-      console.log(`Correo de credenciales enviado con éxito a: ${user.email}`);
-    } catch (error) {
-      console.error('Error al intentar enviar el correo de credenciales:', error);
-    }
+// Disparar el envío de correo automático en segundo plano
+    this.mailService.sendTeacherCredentials(user.email, rawPassword)
+      .then(() => {
+        console.log(`Correo de credenciales enviado con éxito a: ${user.email}`);
+      })
+      .catch((error) => {
+        console.error('Error al intentar enviar el correo de credenciales:', error);
+      });
 
     return {
       id: user.id,
