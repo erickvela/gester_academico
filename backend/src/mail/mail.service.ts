@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
-export class MailService {
+export class MailService {  
   private transporter = nodemailer.createTransport({
-    host: process.env['MAIL_HOST'],
-    port: Number(process.env['MAIL_PORT']),
-    secure: false,
+    host: process.env['MAIL_HOST'] || 'smtp.gmail.com',
+    port: 465, // Cambiado al puerto seguro 465
+    secure: true, // Activado en true para SSL directo
     auth: {
       user: process.env['MAIL_USER'],
       pass: process.env['MAIL_PASS'],
