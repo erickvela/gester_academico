@@ -1,38 +1,8 @@
-<div class="workspace">
-  <aside class="sidebar">
-    <a class="brand" routerLink="/app/overview">
-      <span class="brand-mark">a<span>.</span></span><span>AulaBase</span>
-    </a>
-    <div class="institution"><span class="institution-icon">✳</span><span><b>Espacio académico</b><small>Panel de gestión</small></span><span class="institution-menu">···</span></div>
-    <p class="nav-label">ESPACIO DE TRABAJO</p>
-    <nav class="side-nav" aria-label="Secciones de gestión">
-      <a routerLink="/app/overview" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><span class="nav-icon">⌂</span> Resumen</a>
-      <a routerLink="/app/courses" routerLinkActive="active"><span class="nav-icon">▤</span> Cursos</a>
-      <a routerLink="/app/students" routerLinkActive="active"><span class="nav-icon">✳</span> Alumnos</a>
-      <a routerLink="/app/grades" routerLinkActive="active"><span class="nav-icon">⌁</span> Punteos</a>
-      <a routerLink="/app/reports" routerLinkActive="active"><span class="nav-icon">◷</span> Reportes</a>
-      @if (auth.user()?.role === 'ADMIN') {
-        <p class="nav-label admin-label">ADMINISTRACIÓN</p>
-        <a routerLink="/app/access" routerLinkActive="active"><span class="nav-icon">⌘</span> Accesos</a>
-      }
-    </nav>
-
-    <div class="sidebar-bottom">
+<div class="sidebar-bottom">
       <div class="help-card">
         <span class="help-star">✳</span><b>Un ciclo más claro.</b>
         <p>Tu información académica, conectada en un mismo espacio.</p>
       </div>
-
-      <!-- Botón exclusivo para móviles (oculto en PC) -->
-      <button 
-        type="button" 
-        (click)="auth.logout()" 
-        class="sm:hidden flex items-center justify-center gap-2 w-full py-2.5 px-3 mb-2 bg-red-50 text-red-600 rounded-lg text-xs font-semibold hover:bg-red-100 transition-colors cursor-pointer">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-        </svg>
-        <span>Cerrar sesión</span>
-      </button>
 
       <div class="sidebar-user">
         <span class="avatar">{{ auth.user()?.firstName?.charAt(0) }}{{ auth.user()?.lastName?.charAt(0) }}</span>
@@ -40,19 +10,21 @@
           <b>{{ auth.user()?.firstName }} {{ auth.user()?.lastName }}</b>
           <small>{{ auth.user()?.role === 'ADMIN' ? 'Administración' : 'Docente' }}</small>
         </span>
-        <!-- Botón clásico de PC -->
-        <button type="button" class="logout-button hidden sm:inline-flex" (click)="auth.logout()" aria-label="Cerrar sesión" title="Cerrar sesión">↗</button>
+        <!-- Botón único y unificado: elegante en PC y compacto en móvil -->
+        <button 
+          type="button" 
+          class="logout-button flex items-center justify-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer" 
+          (click)="auth.logout()" 
+          aria-label="Cerrar sesión" 
+          title="Cerrar sesión">
+          <!-- Icono de flecha visible en PC -->
+          <span class="hidden sm:inline">↗</span>
+          <!-- Texto/Icono de salida compacto visible solo en móvil -->
+          <span class="sm:hidden text-xs font-bold flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </span>
+        </button>
       </div>
     </div>
-  </aside>
-
-  <main class="workspace-main">
-    <header class="workspace-topbar">
-      <div class="breadcrumb"><span>AulaBase</span><i>/</i><b>Gestión académica</b></div>
-      <div class="topbar-actions"><span class="today">{{ todayLabel }}</span><span class="top-avatar">{{ auth.user()?.firstName?.charAt(0) }}</span></div>
-    </header>
-    <section class="workspace-content">
-      <router-outlet />
-    </section>
-  </main>
-</div>
