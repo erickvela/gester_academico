@@ -53,7 +53,7 @@ export class AccessService {
     });
     await this.audit.record(actorId, 'access.user.created', ip);
 
-// Disparar el envío de correo automático en segundo plano
+    // Disparar el envío de correo automático en segundo plano
     this.mailService.sendTeacherCredentials(user.email, rawPassword)
       .then(() => {
         console.log(`Correo de credenciales enviado con éxito a: ${user.email}`);
@@ -72,6 +72,29 @@ export class AccessService {
       createdAt: user.createdAt,
       temporaryPassword: input.password ? undefined : rawPassword,
     };
+  }
+
+  async resetPassword(email: string) {
+    // 1. Buscar si el usuario existe usando la estructura de tu proyecto
+    const user = await this.prisma.db.orm.public.User.where({ email }).first();
+    if (!user) {
+      // Por seguridad, se retorna un mensaje genérico para evitar que adivinen correos
+      return { message: 'Si el correo existe, se enviaron las instrucciones.' };
+    }
+
+    // 2. Generar una nueva contraseña  aleatoria
+    const newTempPassword = this.generateRandomPassword(12);
+    const hashedPassword = await hash(newTempPassword, 12);
+
+    // 3. Guardar la nueva contraseña en la base de datos
+    await this.prisma.db.orm.public.User
+      .where({ email })
+      .update({ password: hashedPassword });
+
+    // 4. Enviar el correo usando el servicio de Mailservice
+    await this.mailService.sendTeacherCredentials(email, newTempPassword);
+
+    return { message: 'Correo de recuperación enviado exitosamente.' };
   }
 
   async updateStatus(id: string, isActive: boolean, actorId: string, ip?: string) {

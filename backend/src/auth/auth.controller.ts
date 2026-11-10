@@ -1,10 +1,9 @@
-import { Body, Controller, Post, Patch, UseGuards, Req } from '@nestjs/common';
-import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service.js';
 import { LoginDto } from './dto/login.dto.js';
-import { CreateTeacherDto } from './dto/create-teacher.dto.js'; // <-- Importa el nuevo DTO
-import { AccessTokenGuard } from '../common/access-token.guard.js';
+import { CreateTeacherDto } from './dto/create-teacher.dto.js';
 
 @ApiTags('Autenticación')
 @Controller('auth')
@@ -18,19 +17,17 @@ export class AuthController {
     return this.authService.login(input);
   }
 
-  // Endpoint para registrar docentes usando el DTO
+  // Endpoint para registrar docentes
   @Post('teachers')
   @ApiOperation({ summary: 'Crear cuenta de docente y enviar credenciales por correo' })
-  createTeacher(@Body() dto: CreateTeacherDto) { // <-- Usamos el DTO tipado
+  createTeacher(@Body() dto: CreateTeacherDto) {
     return this.authService.createTeacher(dto);
   }
 
-  @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth()
-  @Patch('change-password')
-  @ApiOperation({ summary: 'Cambio obligatorio de contraseña en el primer inicio de sesión' })
-  changePassword(@Req() req: any, @Body() body: { oldPass: string; newPass: string }) {
-    const userId = req.user.sub;
-    return this.authService.changePassword(userId, body.oldPass, body.newPass);
+  // Endpoint para solicitar la contraseña temporal por correo
+  @Post('reset-password')
+  @ApiOperation({ summary: 'Solicitar restablecimiento de contraseña' })
+  resetPassword(@Body() body: { email: string }) {
+    return this.authService.resetPassword(body.email);
   }
 }

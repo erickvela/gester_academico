@@ -19,6 +19,8 @@
       <span class="login-tag">BIENVENIDO DE VUELTA</span>
       <h2>Inicia sesión</h2>
       <p class="form-intro">Ingresa con tu cuenta institucional para continuar.</p>
+      
+      <!-- Formulario de Inicio de Sesión -->
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <label for="email">Correo electrónico</label>
         <input id="email" type="email" formControlName="email" autocomplete="username" placeholder="nombre@institucion.edu">
@@ -28,7 +30,7 @@
         <label for="password">Contraseña</label>
         <input id="password" type="password" formControlName="password" autocomplete="current-password" placeholder="Al menos 8 caracteres">
         @if (form.controls.password.touched && form.controls.password.invalid) {
-          <span class="field-error">La contraseña debe tener al menos 8 caracteres.</span>
+          <span class="field-error">La contraseña debe tener al menos 6 caracteres.</span>
         }
         @if (errorMessage()) {
           <p class="error-banner" role="alert">{{ errorMessage() }}</p>
@@ -37,7 +39,29 @@
           {{ loading() ? 'Verificando…' : 'Entrar a AulaBase' }} <span aria-hidden="true">↗</span>
         </button>
       </form>
+
+      <!-- Sección de Enlaces y Recuperación -->
       <p class="login-help">¿Necesitas acceso? Solicítalo a la persona administradora de tu institución.</p>
+      
+      <div class="login-help text-center mt-3">
+        <button type="button" class="btn-forgot" (click)="toggleResetMode()">
+          {{ isResetMode ? 'Cancelar recuperación' : '¿Olvidaste tu contraseña?' }}
+        </button>
+      </div>
+
+      <!-- Formulario Desplegable de Recuperación -->
+      @if (isResetMode) {
+        <div class="reset-box mt-3 p-3 border rounded bg-light" style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-top: 10px;">
+          <p class="text-sm text-muted mb-2" style="font-size: 13px; color: #4b5563; margin-bottom: 8px;">
+            Ingresa tu correo institucional para enviarte una nueva contraseña:
+          </p>
+          <input type="email" [(ngModel)]="resetEmail" placeholder="correo@miumg.edu.gt" class="form-control mb-2" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; margin-bottom: 8px;">
+          <button type="button" class="submit-button" (click)="submitReset()" [disabled]="resetLoading()" style="padding: 6px 12px; font-size: 13px; width: 100%;">
+            {{ resetLoading() ? 'Enviando...' : 'Enviar nueva contraseña' }}
+          </button>
+        </div>
+      }
+
       <a routerLink="/" class="back-link"><span aria-hidden="true">←</span> Volver al inicio</a>
     </div>
     <div class="panel-footer">Tus datos se usan únicamente para gestionar el acceso a la plataforma.</div>

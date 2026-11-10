@@ -31,6 +31,11 @@ export class AuthService {
       );
   }
 
+  // Método para solicitar la recuperación de contraseña
+  resetPassword(email: string) {
+    return this.http.post(`${environment.apiUrl}/auth/reset-password`, { email });
+  }
+
   logout(): void {
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(USER_KEY);

@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
 import { PrismaService } from '../prisma/prisma.service.js';
@@ -12,6 +12,15 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly mailService: MailService,
   ) {}
+
+  private generateRandomPassword(length = 12): string {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+    let rawPassword = '';
+    for (let i = 0; i < length; i++) {
+      rawPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return rawPassword;
+  }
 
   async login(input: LoginDto) {
     const user = await this.prisma.db.orm.public.User
@@ -36,24 +45,21 @@ export class AuthService {
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role,
-        mustChangePassword: user.mustChangePassword,
       },
     };
   }
 
-  // 1. Agrega este método
   async createTeacher(dto: { email: string; firstName: string; lastName: string }) {
     const emailNormalized = dto.email.trim().toLowerCase();
-    const tempPassword = Math.random().toString(36).slice(-8);
+    const tempPassword = this.generateRandomPassword(12);
     const hashedPassword = await hash(tempPassword, 10);
 
     const newTeacher = await this.prisma.db.orm.public.User.create({
       email: emailNormalized,
       password: hashedPassword,
-      firstName: dto.firstName,
-      lastName: dto.lastName,
+      firstName: dto.firstName.trim(),
+      lastName: dto.lastName.trim(),
       role: 'TEACHER',
-      mustChangePassword: true,
       isActive: true,
     });
 
@@ -65,26 +71,26 @@ export class AuthService {
     };
   }
 
-  // 2. Agrega este método
-  async changePassword(userId: string, oldPass: string, newPass: string) {
+  async resetPassword(email: string) {
+    const emailNormalized = email.trim().toLowerCase();
     const user = await this.prisma.db.orm.public.User
-      .where({ id: userId })
+      .where({ email: emailNormalized })
       .first();
 
-    if (!user) throw new UnauthorizedException('Usuario no encontrado.');
+    if (!user) {
+      // Por seguridad, devolvemos un mensaje neutral para evitar que adivinen correos
+      return { message: 'Si el correo existe, se enviaron las instrucciones.' };
+    }
 
-    const isMatch = await compare(oldPass, user.password);
-    if (!isMatch) throw new BadRequestException('La contraseña actual es incorrecta.');
-
-    const hashedNewPassword = await hash(newPass, 10);
+    const newTempPassword = this.generateRandomPassword(12);
+    const hashedPassword = await hash(newTempPassword, 10);
 
     await this.prisma.db.orm.public.User
-      .where({ id: userId })
-      .update({
-        password: hashedNewPassword,
-        mustChangePassword: false,
-      });
+      .where({ email: emailNormalized })
+      .update({ password: hashedPassword });
 
-    return { message: 'Contraseña actualizada correctamente. Acceso concedido.' };
+    await this.mailService.sendTeacherCredentials(emailNormalized, newTempPassword);
+
+    return { message: 'Correo de recuperación enviado exitosamente.' };
   }
 }
