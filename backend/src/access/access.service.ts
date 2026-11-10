@@ -6,6 +6,7 @@ import {
 import { hash } from 'bcryptjs';
 import { AuditService } from '../common/audit.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { MailService } from '../mail/mail.service.js';
 import type { CreateUserDto } from './dto/create-user.dto.js';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class AccessService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
+    private readonly mailService: MailService,
   ) {}
 
   list() {
@@ -39,7 +41,6 @@ export class AccessService {
       throw new ConflictException('Ya existe una cuenta con ese correo.');
     }
 
-    // Si el frontend no envía password, generamos una aleatoria válida de 12 caracteres
     const rawPassword = input.password || this.generateRandomPassword(12);
 
     const password = await hash(rawPassword, 12);
@@ -52,6 +53,17 @@ export class AccessService {
     });
     await this.audit.record(actorId, 'access.user.created', ip);
 
+    // Disparar el envío de correo automático con la contraseña temporal
+    try {
+      await this.mailService.sendTeacherCredentials(
+        user.email,
+        rawPassword
+      );
+      console.log(`Correo de credenciales enviado con éxito a: ${user.email}`);
+    } catch (error) {
+      console.error('Error al intentar enviar el correo de credenciales:', error);
+    }
+
     return {
       id: user.id,
       email: user.email,
@@ -60,7 +72,6 @@ export class AccessService {
       role: user.role,
       isActive: user.isActive,
       createdAt: user.createdAt,
-      // Retornamos la clave generada si el backend la asignó automáticamente
       temporaryPassword: input.password ? undefined : rawPassword,
     };
   }

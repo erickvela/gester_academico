@@ -1,16 +1,15 @@
-// src/mail/mail.service.ts
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
-export class MailService {  
+export class MailService {
   private transporter = nodemailer.createTransport({
     host: process.env['MAIL_HOST'],
     port: Number(process.env['MAIL_PORT']),
     secure: false,
     auth: {
       user: process.env['MAIL_USER'],
-      pass: process.env['MAIL_PASSWORD'],
+      pass: process.env['MAIL_PASS'],
     },
   });
 
