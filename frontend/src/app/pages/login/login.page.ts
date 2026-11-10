@@ -1,12 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
   templateUrl: './login.page.html',
   styleUrl: './login.page.scss',
 })
@@ -14,6 +16,11 @@ export class LoginPage {
   private readonly formBuilder = inject(FormBuilder);
   readonly loading = signal(false);
   readonly errorMessage = signal('');
+
+  // Variables y estados para la funcionalidad de recuperación de contraseña
+  isResetMode = false;
+  resetEmail = '';
+  readonly resetLoading = signal(false);
 
   readonly form = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -48,6 +55,38 @@ export class LoginPage {
     });
   }
 
+  // Funciones para la recuperación de contraseña
+  toggleResetMode(): void {
+    this.isResetMode = !this.isResetMode;
+    this.resetEmail = '';
+    this.errorMessage.set('');
+  }
+
+  submitReset(): void {
+    if (!this.resetEmail || !this.resetEmail.includes('@')) {
+      alert('Por favor ingresa un correo electrónico válido.');
+      return;
+    }
+
+    this.resetLoading.set(true);
+    this.errorMessage.set('');
+
+    // Llamada al servicio de autenticación para solicitar la recuperación
+    this.auth.resetPassword(this.resetEmail).subscribe({
+      next: (res: any) => {
+        alert(res?.message || 'Se han enviado las instrucciones de recuperación a tu correo.');
+        this.resetLoading.set(false);
+        this.isResetMode = false;
+        this.resetEmail = '';
+      },
+      error: (error: unknown) => {
+        this.resetLoading.set(false);
+        alert(this.getErrorMessage(error) || 'Ocurrió un error al procesar la solicitud.');
+      },
+      complete: () => this.resetLoading.set(false),
+    });
+  }
+
   private getErrorMessage(error: unknown): string {
     if (error instanceof HttpErrorResponse && error.status === 0) {
       return 'No se pudo conectar con el servidor. Verifica que la API esté iniciada.';
@@ -61,6 +100,6 @@ export class LoginPage {
         return message.join(' ');
       }
     }
-    return 'No se pudo iniciar sesión. Inténtalo nuevamente.';
+    return 'No se pudo completar la operación. Inténtalo nuevamente.';
   }
 }
