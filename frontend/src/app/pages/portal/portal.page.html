@@ -23,7 +23,7 @@
         <p>Tu información académica, conectada en un mismo espacio.</p>
       </div>
 
-      <!-- Botón visible exclusivamente en dispositivos móviles -->
+      <!-- Botón exclusivo para móviles (oculto en PC) -->
       <button 
         type="button" 
         (click)="auth.logout()" 
@@ -40,7 +40,19 @@
           <b>{{ auth.user()?.firstName }} {{ auth.user()?.lastName }}</b>
           <small>{{ auth.user()?.role === 'ADMIN' ? 'Administración' : 'Docente' }}</small>
         </span>
-        <!-- Botón clásico que solo se ve en PC -->
+        <!-- Botón clásico de PC -->
         <button type="button" class="logout-button hidden sm:inline-flex" (click)="auth.logout()" aria-label="Cerrar sesión" title="Cerrar sesión">↗</button>
       </div>
     </div>
+  </aside>
+
+  <main class="workspace-main">
+    <header class="workspace-topbar">
+      <div class="breadcrumb"><span>AulaBase</span><i>/</i><b>Gestión académica</b></div>
+      <div class="topbar-actions"><span class="today">{{ todayLabel }}</span><span class="top-avatar">{{ auth.user()?.firstName?.charAt(0) }}</span></div>
+    </header>
+    <section class="workspace-content">
+      <router-outlet />
+    </section>
+  </main>
+</div>
