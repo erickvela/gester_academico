@@ -1,27 +1,49 @@
 <div class="workspace">
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Navegación de escritorio">
     <a class="brand" routerLink="/app/overview">
       <span class="brand-mark">a<span>.</span></span><span>AulaBase</span>
     </a>
-    <div class="institution"><span class="institution-icon">✳</span><span><b>Espacio académico</b><small>Panel de gestión</small></span><span class="institution-menu">···</span></div>
+    <div class="institution">
+      <span class="institution-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"></path></svg>
+      </span>
+      <span><b>Espacio académico</b><small>Panel de gestión</small></span>
+    </div>
     <p class="nav-label">ESPACIO DE TRABAJO</p>
     <nav class="side-nav" aria-label="Secciones de gestión">
-      <a routerLink="/app/overview" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><span class="nav-icon">⌂</span> Resumen</a>
-      <a routerLink="/app/courses" routerLinkActive="active"><span class="nav-icon">▤</span> Cursos</a>
-      <a routerLink="/app/students" routerLinkActive="active"><span class="nav-icon">✳</span> Alumnos</a>
-      <a routerLink="/app/grades" routerLinkActive="active"><span class="nav-icon">⌁</span> Punteos</a>
-      <a routerLink="/app/reports" routerLinkActive="active"><span class="nav-icon">◷</span> Reportes</a>
+      <a routerLink="/app/overview" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9M9 20v-7h6v7"></path></svg> Resumen
+      </a>
+      <a routerLink="/app/courses" routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 11h6"></path></svg> Cursos
+      </a>
+      <a routerLink="/app/students" routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="10" cy="7" r="4"></circle><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Alumnos
+      </a>
+      <a routerLink="/app/grades" routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5M4 19h17"></path><path d="m7 15 4-4 3 2 6-7"></path></svg> Punteos
+      </a>
+      <a routerLink="/app/reports" routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5M4 19h17"></path><path d="M8 15v-3m4 3V8m4 7v-5"></path></svg> Reportes
+      </a>
       @if (auth.user()?.role === 'ADMIN') {
         <p class="nav-label admin-label">ADMINISTRACIÓN</p>
-        <a routerLink="/app/access" routerLinkActive="active"><span class="nav-icon">⌘</span> Accesos</a>
+        <a routerLink="/app/access" routerLinkActive="active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path><path d="m9 12 2 2 4-4"></path></svg> Accesos
+        </a>
       }
     </nav>
     <div class="sidebar-bottom">
-      <div class="help-card"><span class="help-star">✳</span><b>Un ciclo más claro.</b><p>Tu información académica, conectada en un mismo espacio.</p></div>
+      <div class="help-card">
+        <svg class="help-star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"></path></svg>
+        <b>Un ciclo más claro.</b><p>Tu información académica, conectada en un mismo espacio.</p>
+      </div>
       <div class="sidebar-user">
         <span class="avatar">{{ auth.user()?.firstName?.charAt(0) }}{{ auth.user()?.lastName?.charAt(0) }}</span>
         <span class="user-label"><b>{{ auth.user()?.firstName }} {{ auth.user()?.lastName }}</b><small>{{ auth.user()?.role === 'ADMIN' ? 'Administración' : 'Docente' }}</small></span>
-        <button type="button" class="logout-button" (click)="auth.logout()" aria-label="Cerrar sesión" title="Cerrar sesión">↗</button>
+        <button type="button" class="logout-button" (click)="auth.logout()" aria-label="Cerrar sesión" title="Cerrar sesión">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 17l5-5-5-5"></path><path d="M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg>
+        </button>
       </div>
     </div>
   </aside>
@@ -30,7 +52,50 @@
     <header class="workspace-topbar">
       <div class="breadcrumb"><span>AulaBase</span><i>/</i><b>Gestión académica</b></div>
       <div class="topbar-actions"><span class="today">{{ todayLabel }}</span><span class="top-avatar">{{ auth.user()?.firstName?.charAt(0) }}</span></div>
+      <button
+        class="mobile-menu-toggle"
+        type="button"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-controls="mobile-navigation"
+        [attr.aria-label]="mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'">
+        @if (mobileMenuOpen) {
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"></path></svg>
+        } @else {
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        }
+      </button>
+      <button type="button" class="mobile-logout" (click)="auth.logout()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 17l5-5-5-5"></path><path d="M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg>
+        <span>Salir</span>
+      </button>
     </header>
+    <nav id="mobile-navigation" class="mobile-navigation" [class.mobile-navigation-open]="mobileMenuOpen" aria-label="Navegación móvil">
+      <a routerLink="/app/overview" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9M9 20v-7h6v7"></path></svg>Resumen
+      </a>
+      <a routerLink="/app/courses" routerLinkActive="active" (click)="closeMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path></svg>Cursos
+      </a>
+      <a routerLink="/app/students" routerLinkActive="active" (click)="closeMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="10" cy="7" r="4"></circle><path d="M20 21v-2a4 4 0 0 0-3-3.87"></path></svg>Alumnos
+      </a>
+      <a routerLink="/app/grades" routerLinkActive="active" (click)="closeMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5M4 19h17"></path><path d="m7 15 4-4 3 2 6-7"></path></svg>Punteos
+      </a>
+      <a routerLink="/app/reports" routerLinkActive="active" (click)="closeMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5M4 19h17"></path><path d="M8 15v-3m4 3V8m4 7v-5"></path></svg>Reportes
+      </a>
+      @if (auth.user()?.role === 'ADMIN') {
+        <a routerLink="/app/access" routerLinkActive="active" (click)="closeMobileMenu()">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path><path d="m9 12 2 2 4-4"></path></svg>Accesos
+        </a>
+      }
+      <div class="mobile-user">
+        <span class="avatar">{{ auth.user()?.firstName?.charAt(0) }}{{ auth.user()?.lastName?.charAt(0) }}</span>
+        <span class="user-label"><b>{{ auth.user()?.firstName }} {{ auth.user()?.lastName }}</b><small>{{ auth.user()?.role === 'ADMIN' ? 'Administración' : 'Docente' }}</small></span>
+      </div>
+    </nav>
     <section class="workspace-content">
       <router-outlet />
     </section>

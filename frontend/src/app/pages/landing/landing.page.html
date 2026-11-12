@@ -1,87 +1,188 @@
 <main class="landing">
-  <header class="topbar">
-    <a class="brand" routerLink="/" aria-label="AulaBase, inicio">
-      <span class="brand-mark">a<span>.</span></span>
-      <span>AulaBase</span>
-    </a>
-    <nav aria-label="Navegación principal">
-      <a href="#plataforma">La plataforma</a>
-      <a href="#modulos">Módulos</a>
-      <a routerLink="/login" class="nav-login">Iniciar sesión <span aria-hidden="true">↗</span></a>
-    </nav>
-  </header>
+  <section class="hero-shell">
+    <header class="topbar">
+      <a class="brand" routerLink="/" aria-label="AulaBase, inicio">
+        <span class="brand-mark">a<span>.</span></span>
+        <span>AulaBase</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="#pilares">La plataforma</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a routerLink="/login" class="nav-login">
+          Iniciar sesión
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 17 17 7"></path><path d="M8 7h9v9"></path>
+          </svg>
+        </a>
+      </nav>
+    </header>
 
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow"><span class="eyebrow-dot"></span> GESTIÓN ACADÉMICA, CON CLARIDAD</p>
-      <h1>Más tiempo para enseñar.<br><em>Menos tiempo</em> buscando.</h1>
-      <p class="hero-text">
-        Cursos, alumnos y resultados en un solo lugar. Una plataforma pensada para que
-        cada decisión académica tenga contexto.
-      </p>
-      <div class="hero-actions">
-        <a routerLink="/login" class="button button-primary">Entrar a mi espacio <span aria-hidden="true">↗</span></a>
-        <a href="#modulos" class="button button-link">Conocer los módulos <span aria-hidden="true">↓</span></a>
-      </div>
-      <div class="hero-note">
-        <span class="note-icon">✳</span>
-        <span><strong>Todo conectado.</strong> Del registro del curso al reporte de rendimiento.</span>
-      </div>
-    </div>
-
-    <div class="hero-art" aria-label="Ilustración de panel académico" role="img">
-      <div class="art-orbit orbit-one"></div>
-      <div class="art-orbit orbit-two"></div>
-      <div class="dashboard-card">
-        <div class="dash-top">
-          <div class="dash-brand"><span class="mini-mark">a.</span><span>Resumen académico</span></div>
-          <span class="dash-period">CICLO ACTUAL <b>↗</b></span>
-        </div>
-        <div class="dash-title">Tu espacio,<br>en perspectiva.</div>
-        <div class="dash-stats">
-          <div class="stat-card stat-blue"><span>CURSOS</span><strong>En un solo lugar</strong><i>01</i></div>
-          <div class="stat-card stat-sand"><span>ALUMNOS</span><strong>Seguimiento claro</strong><i>02</i></div>
-        </div>
-        <div class="dash-chart">
-          <div class="chart-heading"><span>Progreso con contexto</span><span class="chart-legend"><i></i> Rendimiento</span></div>
-          <div class="chart-area">
-            <div class="chart-grid"><span></span><span></span><span></span></div>
-            <svg viewBox="0 0 360 112" preserveAspectRatio="none" aria-hidden="true">
-              <path class="chart-fill" d="M0,91 C38,80 40,70 76,75 S116,45 151,58 S198,30 231,42 S277,21 304,32 S335,10 360,16 L360,112 L0,112Z"></path>
-              <path class="chart-line" d="M0,91 C38,80 40,70 76,75 S116,45 151,58 S198,30 231,42 S277,21 304,32 S335,10 360,16"></path>
-              <circle cx="304" cy="32" r="4"></circle>
+    <div class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> GESTIÓN ACADÉMICA, CON CLARIDAD</p>
+        <h1>Tu comunidad<br>académica, <em>en sintonía.</em></h1>
+        <p class="hero-text">
+          Cursos, alumnos y resultados conectados en un solo espacio. Menos tareas dispersas,
+          más tiempo para acompañar cada aprendizaje.
+        </p>
+        <div class="hero-actions">
+          <a routerLink="/login" class="button button-primary">
+            Acceder a la plataforma
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>
             </svg>
-          </div>
-          <div class="chart-labels"><span>Inicio</span><span>Seguimiento</span><span>Cierre</span></div>
+          </a>
+          <a href="#pilares" class="button button-secondary">
+            Explorar AulaBase
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path>
+            </svg>
+          </a>
         </div>
-        <div class="dash-footer"><span>Un ciclo académico, mejor acompañado.</span><b>✳</b></div>
+        <div class="hero-assurance">
+          <span class="assurance-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+          </span>
+          <span><strong>Un espacio organizado y seguro</strong><small>Accesos definidos para cada rol académico</small></span>
+        </div>
       </div>
-      <div class="floating-note"><span class="floating-icon">↗</span><span><b>Información conectada</b><small>Del aula a la coordinación</small></span></div>
-      <div class="art-stamp">A<br><span>B</span></div>
+
+      <div class="hero-visual" role="img" aria-label="Vista previa del panel de gestión académica AulaBase">
+        <div class="visual-glow"></div>
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="dashboard">
+          <div class="dashboard-top">
+            <div class="dashboard-brand"><span class="mini-mark">a.</span><span>Resumen académico</span></div>
+            <span class="period-pill"><i></i> CICLO ACTUAL</span>
+          </div>
+          <div class="dashboard-intro">
+            <div><span class="dashboard-kicker">TU ESPACIO DE TRABAJO</span><h2>Todo en perspectiva.</h2></div>
+            <span class="calendar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="16" rx="3"></rect>
+                <path d="M16 3v4M8 3v4M3 10h18"></path>
+                <path d="m9 15 2 2 4-4"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="dashboard-stats">
+            <div class="dash-stat">
+              <span class="stat-symbol symbol-course" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20M8 7h8"></path></svg>
+              </span>
+              <span class="stat-label">CURSOS ACTIVOS</span><strong>12</strong><small><b>+2</b> este ciclo</small>
+            </div>
+            <div class="dash-stat">
+              <span class="stat-symbol symbol-student" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="10" cy="7" r="4"></circle><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </span>
+              <span class="stat-label">ALUMNOS</span><strong>248</strong><small><b>En seguimiento</b></small>
+            </div>
+          </div>
+          <div class="progress-panel">
+            <div class="progress-heading"><span><strong>Rendimiento académico</strong><small>Progreso del ciclo</small></span><span class="progress-value">78%<small>+8.4%</small></span></div>
+            <div class="chart">
+              <svg viewBox="0 0 440 120" preserveAspectRatio="none" aria-hidden="true">
+                <defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#6da4ff" stop-opacity=".28"></stop><stop offset="1" stop-color="#6da4ff" stop-opacity="0"></stop></linearGradient></defs>
+                <path class="chart-area-fill" d="M0 94C38 91 51 75 84 78s45-28 79-19 41 16 70-2 42-10 73-25 43 12 66-1 40-17 68-26v115H0Z"></path>
+                <path class="chart-stroke" d="M0 94C38 91 51 75 84 78s45-28 79-19 41 16 70-2 42-10 73-25 43 12 66-1 40-17 68-26"></path>
+                <circle cx="370" cy="31" r="4"></circle>
+              </svg>
+            </div>
+            <div class="chart-labels"><span>Inicio</span><span>Seguimiento</span><span>Cierre de ciclo</span></div>
+          </div>
+          <div class="dashboard-footer">
+            <span><i></i> Datos actualizados</span>
+            <span>Ver reportes
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17 17 7"></path><path d="M8 7h9v9"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-index"><span>01</span><i></i><span>03</span><small>ORGANIZAR · ACOMPAÑAR · AVANZAR</small></div>
     </div>
+    <a class="scroll-cue" href="#pilares" aria-label="Desplazarse a los pilares de AulaBase">
+      <span>DESCUBRE AULABASE</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+    </a>
   </section>
 
-  <section class="trust-strip" id="plataforma">
-    <span>HECHA PARA EL DÍA A DÍA ACADÉMICO</span>
-    <div><b>01</b> Organiza</div><div><b>02</b> Da seguimiento</div><div><b>03</b> Decide con datos</div>
-  </section>
-
-  <section class="modules-section" id="modulos">
+  <section class="pillars" id="pilares">
     <div class="section-heading">
-      <div><p class="eyebrow">UNA BASE SÓLIDA PARA CADA CICLO</p><h2>Lo esencial, <em>bien conectado.</em></h2></div>
-      <p>Un punto de partida sencillo para administrar la información académica con orden, permisos y trazabilidad.</p>
+      <div>
+        <p class="section-eyebrow"><span></span> UNA BASE SÓLIDA PARA CADA CICLO</p>
+        <h2>Todo lo que necesitas,<br><em>conectado con propósito.</em></h2>
+      </div>
+      <p>Herramientas sencillas para organizar la gestión académica y dar seguimiento a lo que realmente importa: el aprendizaje.</p>
     </div>
-    <div class="module-grid">
-      <article class="module-card"><span class="module-number">01 / ACADÉMICO</span><div class="module-icon icon-course">▤</div><h3>Cursos</h3><p>Registra asignaturas, define docentes y mantén visible el estado de cada curso.</p><span class="module-arrow">↗</span></article>
-      <article class="module-card"><span class="module-number">02 / COMUNIDAD</span><div class="module-icon icon-student">✳</div><h3>Alumnos</h3><p>Centraliza los datos, el carné y el estado de cada alumno inscrito.</p><span class="module-arrow">↗</span></article>
-      <article class="module-card"><span class="module-number">03 / SEGUIMIENTO</span><div class="module-icon icon-grade">⌁</div><h3>Punteos</h3><p>Registra evaluaciones con valor máximo y ponderación para cada curso.</p><span class="module-arrow">↗</span></article>
-      <article class="module-card"><span class="module-number">04 / CONTROL</span><div class="module-icon icon-access">⌘</div><h3>Accesos y reportes</h3><p>Asigna roles, revisa indicadores y conserva un registro de acciones clave.</p><span class="module-arrow">↗</span></article>
+    <div class="pillar-grid">
+      <article class="pillar-card pillar-blue">
+        <div class="pillar-top"><span class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 11h6"></path></svg>
+        </span><span class="pillar-index">01</span></div>
+        <p class="pillar-label">ORGANIZACIÓN</p><h3>Cursos con estructura</h3>
+        <p class="pillar-description">Centraliza asignaturas, docentes y ciclos para que cada curso tenga su espacio y contexto.</p>
+        <span class="pillar-link">Una base clara para empezar
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+        </span>
+      </article>
+      <article class="pillar-card pillar-green">
+        <div class="pillar-top"><span class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="10" cy="7" r="4"></circle><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </span><span class="pillar-index">02</span></div>
+        <p class="pillar-label">COMUNIDAD</p><h3>Cada alumno cuenta</h3>
+        <p class="pillar-description">Mantén la información y las inscripciones organizadas para acompañar a cada estudiante.</p>
+        <span class="pillar-link">Personas en el centro
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+        </span>
+      </article>
+      <article class="pillar-card pillar-amber">
+        <div class="pillar-top"><span class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h17"></path><path d="m7 15 4-4 3 2 6-7M15 6h5v5"></path></svg>
+        </span><span class="pillar-index">03</span></div>
+        <p class="pillar-label">SEGUIMIENTO</p><h3>Progreso con contexto</h3>
+        <p class="pillar-description">Registra evaluaciones y consulta reportes que ayudan a ver el avance académico.</p>
+        <span class="pillar-link">Decisiones con información
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+        </span>
+      </article>
+      <article class="pillar-card pillar-violet">
+        <div class="pillar-top"><span class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        </span><span class="pillar-index">04</span></div>
+        <p class="pillar-label">CONFIANZA</p><h3>Accesos bajo control</h3>
+        <p class="pillar-description">Administra roles y permisos para que cada persona acceda a lo que necesita.</p>
+        <span class="pillar-link">Roles claros, gestión segura
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+        </span>
+      </article>
     </div>
+  </section>
+
+  <section class="closing" id="como-funciona">
+    <div class="closing-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="m2 9 10-5 10 5-10 5L2 9Z"></path><path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"></path></svg>
+    </div>
+    <div class="closing-copy"><p>UN ESPACIO PARA ENSEÑAR Y GESTIONAR MEJOR</p><h2>Haz que cada ciclo cuente.</h2><span>Ingresa a AulaBase y mantén tu gestión académica en sintonía.</span></div>
+    <a routerLink="/login" class="button button-closing">
+      Acceder a la plataforma
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+    </a>
   </section>
 
   <footer class="landing-footer">
-    <a class="brand" routerLink="/"><span class="brand-mark">a<span>.</span></span><span>AulaBase</span></a>
+    <a class="brand" routerLink="/" aria-label="AulaBase, inicio">
+      <span class="brand-mark">a<span>.</span></span><span>AulaBase</span>
+    </a>
     <span>Una herramienta académica con propósito.</span>
-    <a routerLink="/login">Acceder <span aria-hidden="true">↗</span></a>
+    <a routerLink="/login">Iniciar sesión
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg>
+    </a>
   </footer>
 </main>

@@ -9,6 +9,8 @@ import { AuthService } from '../../core/auth.service';
   styleUrl: './portal.page.scss',
 })
 export class PortalPage {
+  mobileMenuOpen = false;
+
   readonly todayLabel = new Intl.DateTimeFormat('es-GT', {
     weekday: 'long',
     day: 'numeric',
@@ -16,4 +18,12 @@ export class PortalPage {
   }).format(new Date());
 
   constructor(readonly auth: AuthService) {}
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
+  }
 }

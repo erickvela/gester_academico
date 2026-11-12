@@ -17,7 +17,7 @@ export class LoginPage {
   readonly loading = signal(false);
   readonly errorMessage = signal('');
 
-  // Variables y estados para la funcionalidad de recuperación de contraseña
+  passwordVisible = false;
   isResetMode = false;
   resetEmail = '';
   readonly resetLoading = signal(false);
@@ -32,6 +32,10 @@ export class LoginPage {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
   ) {}
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
   submit(): void {
     if (this.form.invalid || this.loading()) {
