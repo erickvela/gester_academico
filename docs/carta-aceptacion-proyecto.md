@@ -9,7 +9,7 @@ Presente.
 
 ### Asunto: Aceptación de entrega de proyecto académico
 
-Por este medio, yo, **Ing. Isaías Och**, en calidad de **Catedrático / Asesor de Proyecto** de la **Universidad Mariano Gálvez de Guatemala (Sede Amatitlán)**, hago constar que he recibido y revisado el proyecto **“AulaBase: sistema web de gestión académica”**, presentado por **Erick Vela**, estudiante de la carrera de **Ingeniería en Sistemas**, identificado con número de carné **6691-21-4364**.
+Por este medio, yo, **Ing. Isaías Och**, en calidad de **Catedrático / Asesor de Proyecto** de la **Universidad Mariano Gálvez de Guatemala (Sede Amatitlán)**, hago constar que he recibido y revisado el proyecto **“AulaBase: sistema web de gestión académica”**, presentado por **Erick Vela**, estudiante de la carrera de **Ingeniería en Sistemas**.
 
 El alcance implementado comprende una aplicación web full-stack para registrar y dar seguimiento a cursos, alumnos, inscripciones y punteos; consultar reportes académicos; y administrar cuentas y roles de acceso. La solución incluye página institucional de bienvenida (Landing Page), módulo de inicio de sesión con diseño Glassmorphism, portal responsivo con navegación adaptada para dispositivos móviles e iconografía vectorial SVG, y documentación técnica de soporte. La interfaz está desarrollada con Angular 22 y SCSS; el backend, con NestJS 12 y Prisma ORM; y la persistencia, en PostgreSQL alojado en Supabase.
 
@@ -30,7 +30,7 @@ Atentamente,
 | Estudiante | Catedrático / Asesor institucional |
 |---|---|
 | **Nombre:** Erick Vela | **Nombre:** Ing. Isaías Och |
-| **Carné:** 6691-21-4364 | **Cargo:** Catedrático / Asesor |
+                         | **Cargo:** Catedrático / Asesor |
 | **Firma:** ______________________________ | **Firma y sello:** ______________________________ |
 | **Fecha:** 13 de noviembre de 2026 | **Fecha:** 13 de noviembre de 2026 |
 
