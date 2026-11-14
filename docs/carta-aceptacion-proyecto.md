@@ -1,40 +1,38 @@
-# Carta modelo de aceptación del proyecto
+# Carta de aceptación del proyecto
 
-> **Plantilla para revisión institucional.** Completa los campos entre corchetes y solicita la aprobación y firma de las personas autorizadas. Este documento no representa una aceptación real mientras no haya sido revisado y firmado.
-
-**[Lugar], [día] de [mes] de [año]**
+**Guatemala, 13 de noviembre de 2026**
 
 **Señores**  
-**[Nombre de la universidad o institución]**  
-**[Facultad / carrera]**  
+**Universidad Mariano Gálvez de Guatemala**  
+**Sede Amatitlán — Facultad de Ingeniería en Sistemas**  
 Presente.
 
-### Asunto: Aceptación de propuesta de proyecto académico
+### Asunto: Aceptación de entrega de proyecto académico
 
-Por este medio, yo, **[nombre de la persona responsable o asesora]**, en calidad de **[cargo]** de **[institución/organización]**, hago constar que he recibido y revisado la propuesta del proyecto **“AulaBase: sistema web de gestión académica”**, presentada por **[nombre completo del estudiante]**, estudiante de **[carrera y carné]**.
+Por este medio, yo, **Ing. Isaías Och**, en calidad de **Catedrático / Asesor de Proyecto** de la **Universidad Mariano Gálvez de Guatemala (Sede Amatitlán)**, hago constar que he recibido y revisado el proyecto **“AulaBase: sistema web de gestión académica”**, presentado por **Erick Vela**, estudiante de la carrera de **Ingeniería en Sistemas**, identificado con número de carné **6691-21-4364**.
 
-La propuesta contempla el diseño y desarrollo de una aplicación web para apoyar el registro y seguimiento de cursos, alumnos, inscripciones y punteos; la consulta de reportes básicos; y la administración de accesos para el personal autorizado. La solución propuesta utiliza Angular para la interfaz, NestJS para la API, PostgreSQL como base de datos y Prisma como ORM.
+El alcance implementado comprende una aplicación web full-stack para registrar y dar seguimiento a cursos, alumnos, inscripciones y punteos; consultar reportes académicos; y administrar cuentas y roles de acceso. La solución incluye página institucional de bienvenida (Landing Page), módulo de inicio de sesión con diseño Glassmorphism, portal responsivo con navegación adaptada para dispositivos móviles e iconografía vectorial SVG, y documentación técnica de soporte. La interfaz está desarrollada con Angular 22 y SCSS; el backend, con NestJS 12 y Prisma ORM; y la persistencia, en PostgreSQL alojado en Supabase.
 
-En consecuencia, **[seleccionar y completar una opción]**:
+**Estado técnico verificado:** Sistema implementado, probado y desplegado en entorno productivo. La base de datos opera en Supabase con políticas de seguridad a nivel de fila (Row-Level Security / RLS) activas en las tablas principales, mientras que el frontend se encuentra publicado mediante integración continua desde GitHub hacia Vercel.
 
-- ☐ Se **acepta** la propuesta como proyecto académico, sujeta al alcance, entregables, calendario y criterios que apruebe la institución.
-- ☐ Se **acepta con las siguientes observaciones o condiciones**:  
-  **[describir observaciones, cambios de alcance o condiciones]**
-- ☐ Se solicita **revisión antes de la aceptación** por los siguientes motivos:  
-  **[describir motivos]**
+En consecuencia, se hace constar la resolución correspondiente:
 
-La aceptación de esta propuesta no implica autorización para utilizar datos personales reales, credenciales institucionales, infraestructura productiva ni información confidencial. Cualquier uso de esos recursos deberá contar con aprobación expresa y cumplir las políticas aplicables de la institución.
+- [x] Se **acepta** el proyecto como entrega académica final, cumpliendo con el alcance funcional, técnico y de despliegue establecidos.
+- [ ] Se **acepta con las siguientes observaciones o condiciones**:  
+  ___________________________________________________________________________
+- [ ] Se solicita **revisión antes de la aceptación** por los siguientes motivos:  
+  ___________________________________________________________________________
 
-Los entregables y fechas se acordarán con **[asesor / coordinación / contraparte]**. La presente carta deberá interpretarse conforme a los procedimientos y requisitos de **[nombre de la institución]**.
+La implementación y uso de este sistema se enmarca dentro de los fines académicos y lineamientos establecidos por la Universidad Mariano Gálvez de Guatemala, resguardando la integridad y privacidad de la información conforme a las políticas institucionales vigentes.
 
 Atentamente,
 
-| Estudiante | Asesor(a) / representante institucional |
+| Estudiante | Catedrático / Asesor institucional |
 |---|---|
-| **Nombre:** [nombre completo] | **Nombre:** [nombre completo] |
-| **Carné:** [número] | **Cargo:** [cargo] |
+| **Nombre:** Erick Vela | **Nombre:** Ing. Isaías Och |
+| **Carné:** 6691-21-4364 | **Cargo:** Catedrático / Asesor |
 | **Firma:** ______________________________ | **Firma y sello:** ______________________________ |
-| **Fecha:** [fecha] | **Fecha:** [fecha] |
+| **Fecha:** 13 de noviembre de 2026 | **Fecha:** 13 de noviembre de 2026 |
 
-**Visto bueno de coordinación (si aplica):**  
-Nombre: [nombre] · Cargo: [cargo] · Firma: ______________________________ · Fecha: [fecha]
+**Visto bueno de coordinación de sede (si aplica):**  
+Nombre: ______________________________ · Cargo: Coordinación de Carrera · Firma y sello: ______________________________ · Fecha: 13 de noviembre de 2026
